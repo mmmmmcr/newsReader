@@ -1,10 +1,10 @@
-package com.example.newsreader;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.mirceabadoi.newsreader;
 
 import android.os.Bundle;
 
-import com.example.newsreader.ui.main.MainFragment;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.mirceabadoi.newsreader.ui.fragments.NewsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, NewsFragment.newInstance())
                     .commitNow();
         }
     }

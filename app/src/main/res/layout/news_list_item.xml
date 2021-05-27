@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.mirceabadoi.newsreader.models.ArticleItemViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/newsImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="@dimen/default_screen_margin"
+            android:adjustViewBounds="true"
+            android:contentDescription="newsImage"
+            app:imageUrl="@{viewModel.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499" />
+
+
+        <TextView
+            android:id="@+id/newsText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_screen_margin"
+            android:layout_marginBottom="@dimen/default_screen_margin"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingLeft="5dp"
+            android:text="@{viewModel.contentDescription}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/newsTitle"
+            app:layout_constraintTop_toBottomOf="@+id/newsTitle" />
+
+        <TextView
+            android:id="@+id/newsTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin_between_components"
+            android:layout_marginEnd="@dimen/default_screen_margin"
+            android:layout_marginBottom="@dimen/default_margin_between_components"
+            android:ellipsize="end"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:text="@{viewModel.title}"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/newsText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/newsDateAndTime"
+            app:layout_constraintTop_toBottomOf="@+id/newsDateAndTime" />
+
+        <TextView
+            android:id="@+id/newsDateAndTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_screen_margin"
+            android:layout_marginEnd="@dimen/default_screen_margin"
+            android:ellipsize="end"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:text="@{viewModel.dateAndTime}"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/newsTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/newsImage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="left"
+            app:constraint_referenced_ids="newsDateAndTime,newsTitle,newsText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
