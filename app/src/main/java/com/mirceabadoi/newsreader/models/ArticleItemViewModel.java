@@ -11,9 +11,9 @@ public class ArticleItemViewModel extends ViewModel {
     public final ObservableField<String> title;
     public final ObservableField<String> contentDescription;
 
-    public ArticleItemViewModel(String date, String title, String content) {
+    public ArticleItemViewModel(String date, String title, String content, String imageUrl) {
         this.imageUrl = new ObservableField<>();
-        this.imageUrl.set("https://homepages.cae.wisc.edu/~ece533/images/fruits.png");
+        this.imageUrl.set(imageUrl);
         this.dateAndTime = new ObservableField<>();
         this.title = new ObservableField<>();
         this.contentDescription = new ObservableField<>();
