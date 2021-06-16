@@ -7,13 +7,9 @@ import com.example.data.repo.local.NewsLocalDataStore;
 import com.example.data.repo.remote.NewsRepository;
 import com.example.data.repo.remote.RemoteSource;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 import io.reactivex.Single;
-import io.reactivex.SingleSource;
-import io.reactivex.functions.Function;
 
 public class NewsRepositoryImpl implements NewsRepository {
     private final RemoteSource remoteDataStore;
@@ -30,12 +26,7 @@ public class NewsRepositoryImpl implements NewsRepository {
 
         return remoteDataStore.getNewsArticles()
                 .doOnSuccess(localDataStore::saveArticles)
-                .onErrorResumeNext(new Function<Throwable, SingleSource<? extends List<NewsArticle>>>() {
-                    @Override
-                    public SingleSource<? extends List<NewsArticle>> apply(@NotNull Throwable throwable) throws Exception {
-                        return localDataStore.getNewsList();
-                    }
-                });
+                .onErrorResumeNext(throwable -> localDataStore.getNewsList());
 
     }
 }
