@@ -5,20 +5,21 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-import com.example.data.repo.local.NewsLocalDataStore;
+import com.example.data.repo.NewsRepositoryImpl;
 import com.example.data.repo.local.NewsDatabase;
+import com.example.data.repo.local.NewsLocalDataStore;
 import com.example.data.repo.remote.HttpClientFactory;
 import com.example.data.repo.remote.NewsRepository;
-import com.example.data.repo.NewsRepositoryImpl;
 import com.example.data.repo.remote.RemoteSource;
 
 import io.reactivex.annotations.NonNull;
 
 public class RepoModule {
+    public static final String NEWS_DB = "News.db";
     @NonNull
-    private Context context;
+    private final Context context;
     @NonNull
-    private HttpClientFactory httpClientFactory;
+    private final HttpClientFactory httpClientFactory;
     private volatile NewsDatabase database;
 
     public RepoModule(@NonNull Application application) {
@@ -44,7 +45,7 @@ public class RepoModule {
             synchronized (NewsDatabase.class) {
                 if (database == null) {
                     database = Room.databaseBuilder(context.getApplicationContext(),
-                            NewsDatabase.class, "News.db")
+                            NewsDatabase.class, NEWS_DB)
                             .build();
                 }
             }

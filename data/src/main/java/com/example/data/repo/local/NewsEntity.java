@@ -11,13 +11,13 @@ public class NewsEntity {
     @Nullable
     public Integer id;
 
-    public int priority;
-
     public String title;
 
     public String image;
 
     public String newsDescription;
+
+    public String newsContent;
 
     public String newsDate;
 
