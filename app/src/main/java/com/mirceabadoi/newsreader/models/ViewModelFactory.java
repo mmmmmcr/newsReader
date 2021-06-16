@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.data.repo.NewsRepository;
+import com.example.data.repo.remote.NewsRepository;
 import com.mirceabadoi.newsreader.NewsReaderApplication;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {

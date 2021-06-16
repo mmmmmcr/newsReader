@@ -10,7 +10,7 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModel;
 
-import com.example.data.repo.NewsRepository;
+import com.example.data.repo.remote.NewsRepository;
 import com.mirceabadoi.newsreader.ClicksHandler;
 import com.mirceabadoi.newsreader.mapper.ArticleToArticleViewModelMapper;
 
