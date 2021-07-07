@@ -10,7 +10,7 @@ import com.example.data.repo.local.NewsDatabase;
 import com.example.data.repo.local.NewsLocalDataStore;
 import com.example.data.repo.remote.HttpClientFactory;
 import com.example.data.repo.remote.NewsRepository;
-import com.example.data.repo.remote.RemoteSource;
+import com.example.data.repo.remote.NewsRemoteDataStore;
 
 import io.reactivex.annotations.NonNull;
 
@@ -31,8 +31,8 @@ public class RepoModule {
         return new NewsRepositoryImpl(provideNewsRemoteSource(), provideNewsLocalSource());
     }
 
-    private RemoteSource provideNewsRemoteSource() {
-        return new RemoteSource(httpClientFactory.getNewsApi());
+    private NewsRemoteDataStore provideNewsRemoteSource() {
+        return new NewsRemoteDataStore(httpClientFactory.getNewsApi());
     }
 
     private NewsLocalDataStore provideNewsLocalSource() {

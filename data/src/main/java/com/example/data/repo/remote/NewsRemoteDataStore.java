@@ -9,11 +9,11 @@ import java.util.Locale;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-public class RemoteSource {
+public class NewsRemoteDataStore {
     private static final String API_KEY = "7da6b88ba5a7463994eb22961ea43aa0";
     private final NewsAPI newsAPI;
 
-    public RemoteSource(NewsAPI newsAPI) {
+    public NewsRemoteDataStore(NewsAPI newsAPI) {
         this.newsAPI = newsAPI;
     }
 

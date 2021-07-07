@@ -33,9 +33,9 @@ public final class NewsDatabase_Impl extends NewsDatabase {
     final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `news` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `priority` INTEGER NOT NULL, `title` TEXT, `image` TEXT, `newsDescription` TEXT, `newsDate` TEXT)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `news` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT, `image` TEXT, `newsDescription` TEXT, `newsContent` TEXT, `newsDate` TEXT)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '81f2020a64e82dbf4664063421a3cee1')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '449e36df9ff1699647883a562334ddd1')");
       }
 
       @Override
@@ -81,10 +81,10 @@ public final class NewsDatabase_Impl extends NewsDatabase {
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
         final HashMap<String, TableInfo.Column> _columnsNews = new HashMap<String, TableInfo.Column>(6);
         _columnsNews.put("id", new TableInfo.Column("id", "INTEGER", false, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsNews.put("priority", new TableInfo.Column("priority", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNews.put("title", new TableInfo.Column("title", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNews.put("image", new TableInfo.Column("image", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNews.put("newsDescription", new TableInfo.Column("newsDescription", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsNews.put("newsContent", new TableInfo.Column("newsContent", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsNews.put("newsDate", new TableInfo.Column("newsDate", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysNews = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesNews = new HashSet<TableInfo.Index>(0);
@@ -97,7 +97,7 @@ public final class NewsDatabase_Impl extends NewsDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "81f2020a64e82dbf4664063421a3cee1", "4c1ed29326938a9e608a70dd7c573302");
+    }, "449e36df9ff1699647883a562334ddd1", "5fc9dbea30c0166d080f735e06bdea54");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)

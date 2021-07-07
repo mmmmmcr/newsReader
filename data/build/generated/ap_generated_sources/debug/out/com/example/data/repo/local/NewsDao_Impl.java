@@ -29,18 +29,14 @@ public final class NewsDao_Impl implements NewsDao {
 
   private final EntityInsertionAdapter<NewsEntity> __insertionAdapterOfNewsEntity;
 
-  private final SharedSQLiteStatement __preparedStmtOfDeleteNewsItem;
-
-  private final SharedSQLiteStatement __preparedStmtOfDeleteAllToDos;
-
-  private final SharedSQLiteStatement __preparedStmtOfUpdateProfile;
+  private final SharedSQLiteStatement __preparedStmtOfDeleteAllNews;
 
   public NewsDao_Impl(RoomDatabase __db) {
     this.__db = __db;
     this.__insertionAdapterOfNewsEntity = new EntityInsertionAdapter<NewsEntity>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `news` (`id`,`priority`,`title`,`image`,`newsDescription`,`newsDate`) VALUES (?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `news` (`id`,`title`,`image`,`newsDescription`,`newsContent`,`newsDate`) VALUES (?,?,?,?,?,?)";
       }
 
       @Override
@@ -50,21 +46,25 @@ public final class NewsDao_Impl implements NewsDao {
         } else {
           stmt.bindLong(1, value.id);
         }
-        stmt.bindLong(2, value.priority);
         if (value.title == null) {
-          stmt.bindNull(3);
+          stmt.bindNull(2);
         } else {
-          stmt.bindString(3, value.title);
+          stmt.bindString(2, value.title);
         }
         if (value.image == null) {
-          stmt.bindNull(4);
+          stmt.bindNull(3);
         } else {
-          stmt.bindString(4, value.image);
+          stmt.bindString(3, value.image);
         }
         if (value.newsDescription == null) {
+          stmt.bindNull(4);
+        } else {
+          stmt.bindString(4, value.newsDescription);
+        }
+        if (value.newsContent == null) {
           stmt.bindNull(5);
         } else {
-          stmt.bindString(5, value.newsDescription);
+          stmt.bindString(5, value.newsContent);
         }
         if (value.newsDate == null) {
           stmt.bindNull(6);
@@ -73,31 +73,17 @@ public final class NewsDao_Impl implements NewsDao {
         }
       }
     };
-    this.__preparedStmtOfDeleteNewsItem = new SharedSQLiteStatement(__db) {
-      @Override
-      public String createQuery() {
-        final String _query = "DELETE FROM news where id=?";
-        return _query;
-      }
-    };
-    this.__preparedStmtOfDeleteAllToDos = new SharedSQLiteStatement(__db) {
+    this.__preparedStmtOfDeleteAllNews = new SharedSQLiteStatement(__db) {
       @Override
       public String createQuery() {
         final String _query = "DELETE FROM news";
         return _query;
       }
     };
-    this.__preparedStmtOfUpdateProfile = new SharedSQLiteStatement(__db) {
-      @Override
-      public String createQuery() {
-        final String _query = "UPDATE news SET title = ?, newsDescription = ?, newsDate = ?, image = ?, priority = ? where id=?";
-        return _query;
-      }
-    };
   }
 
   @Override
-  public Completable insertToDos(final List<NewsEntity> news) {
+  public Completable insertArticles(final List<NewsEntity> news) {
     return Completable.fromCallable(new Callable<Void>() {
       @Override
       public Void call() throws Exception {
@@ -114,30 +100,11 @@ public final class NewsDao_Impl implements NewsDao {
   }
 
   @Override
-  public Completable insertToDo(final NewsEntity news) {
+  public Completable deleteAllNews() {
     return Completable.fromCallable(new Callable<Void>() {
       @Override
       public Void call() throws Exception {
-        __db.beginTransaction();
-        try {
-          __insertionAdapterOfNewsEntity.insert(news);
-          __db.setTransactionSuccessful();
-          return null;
-        } finally {
-          __db.endTransaction();
-        }
-      }
-    });
-  }
-
-  @Override
-  public Completable deleteNewsItem(final int id) {
-    return Completable.fromCallable(new Callable<Void>() {
-      @Override
-      public Void call() throws Exception {
-        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteNewsItem.acquire();
-        int _argIndex = 1;
-        _stmt.bindLong(_argIndex, id);
+        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAllNews.acquire();
         __db.beginTransaction();
         try {
           _stmt.executeUpdateDelete();
@@ -145,74 +112,7 @@ public final class NewsDao_Impl implements NewsDao {
           return null;
         } finally {
           __db.endTransaction();
-          __preparedStmtOfDeleteNewsItem.release(_stmt);
-        }
-      }
-    });
-  }
-
-  @Override
-  public Completable deleteAllToDos() {
-    return Completable.fromCallable(new Callable<Void>() {
-      @Override
-      public Void call() throws Exception {
-        final SupportSQLiteStatement _stmt = __preparedStmtOfDeleteAllToDos.acquire();
-        __db.beginTransaction();
-        try {
-          _stmt.executeUpdateDelete();
-          __db.setTransactionSuccessful();
-          return null;
-        } finally {
-          __db.endTransaction();
-          __preparedStmtOfDeleteAllToDos.release(_stmt);
-        }
-      }
-    });
-  }
-
-  @Override
-  public Completable updateProfile(final String title, final String description, final String date,
-      final String image, final int priority, final int id) {
-    return Completable.fromCallable(new Callable<Void>() {
-      @Override
-      public Void call() throws Exception {
-        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateProfile.acquire();
-        int _argIndex = 1;
-        if (title == null) {
-          _stmt.bindNull(_argIndex);
-        } else {
-          _stmt.bindString(_argIndex, title);
-        }
-        _argIndex = 2;
-        if (description == null) {
-          _stmt.bindNull(_argIndex);
-        } else {
-          _stmt.bindString(_argIndex, description);
-        }
-        _argIndex = 3;
-        if (date == null) {
-          _stmt.bindNull(_argIndex);
-        } else {
-          _stmt.bindString(_argIndex, date);
-        }
-        _argIndex = 4;
-        if (image == null) {
-          _stmt.bindNull(_argIndex);
-        } else {
-          _stmt.bindString(_argIndex, image);
-        }
-        _argIndex = 5;
-        _stmt.bindLong(_argIndex, priority);
-        _argIndex = 6;
-        _stmt.bindLong(_argIndex, id);
-        __db.beginTransaction();
-        try {
-          _stmt.executeUpdateDelete();
-          __db.setTransactionSuccessful();
-          return null;
-        } finally {
-          __db.endTransaction();
-          __preparedStmtOfUpdateProfile.release(_stmt);
+          __preparedStmtOfDeleteAllNews.release(_stmt);
         }
       }
     });
@@ -228,10 +128,10 @@ public final class NewsDao_Impl implements NewsDao {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfPriority = CursorUtil.getColumnIndexOrThrow(_cursor, "priority");
           final int _cursorIndexOfTitle = CursorUtil.getColumnIndexOrThrow(_cursor, "title");
           final int _cursorIndexOfImage = CursorUtil.getColumnIndexOrThrow(_cursor, "image");
           final int _cursorIndexOfNewsDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "newsDescription");
+          final int _cursorIndexOfNewsContent = CursorUtil.getColumnIndexOrThrow(_cursor, "newsContent");
           final int _cursorIndexOfNewsDate = CursorUtil.getColumnIndexOrThrow(_cursor, "newsDate");
           final List<NewsEntity> _result = new ArrayList<NewsEntity>(_cursor.getCount());
           while(_cursor.moveToNext()) {
@@ -242,7 +142,6 @@ public final class NewsDao_Impl implements NewsDao {
             } else {
               _item.id = _cursor.getInt(_cursorIndexOfId);
             }
-            _item.priority = _cursor.getInt(_cursorIndexOfPriority);
             if (_cursor.isNull(_cursorIndexOfTitle)) {
               _item.title = null;
             } else {
@@ -257,6 +156,11 @@ public final class NewsDao_Impl implements NewsDao {
               _item.newsDescription = null;
             } else {
               _item.newsDescription = _cursor.getString(_cursorIndexOfNewsDescription);
+            }
+            if (_cursor.isNull(_cursorIndexOfNewsContent)) {
+              _item.newsContent = null;
+            } else {
+              _item.newsContent = _cursor.getString(_cursorIndexOfNewsContent);
             }
             if (_cursor.isNull(_cursorIndexOfNewsDate)) {
               _item.newsDate = null;
@@ -293,10 +197,10 @@ public final class NewsDao_Impl implements NewsDao {
         final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
         try {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfPriority = CursorUtil.getColumnIndexOrThrow(_cursor, "priority");
           final int _cursorIndexOfTitle = CursorUtil.getColumnIndexOrThrow(_cursor, "title");
           final int _cursorIndexOfImage = CursorUtil.getColumnIndexOrThrow(_cursor, "image");
           final int _cursorIndexOfNewsDescription = CursorUtil.getColumnIndexOrThrow(_cursor, "newsDescription");
+          final int _cursorIndexOfNewsContent = CursorUtil.getColumnIndexOrThrow(_cursor, "newsContent");
           final int _cursorIndexOfNewsDate = CursorUtil.getColumnIndexOrThrow(_cursor, "newsDate");
           final NewsEntity _result;
           if(_cursor.moveToFirst()) {
@@ -306,7 +210,6 @@ public final class NewsDao_Impl implements NewsDao {
             } else {
               _result.id = _cursor.getInt(_cursorIndexOfId);
             }
-            _result.priority = _cursor.getInt(_cursorIndexOfPriority);
             if (_cursor.isNull(_cursorIndexOfTitle)) {
               _result.title = null;
             } else {
@@ -321,6 +224,11 @@ public final class NewsDao_Impl implements NewsDao {
               _result.newsDescription = null;
             } else {
               _result.newsDescription = _cursor.getString(_cursorIndexOfNewsDescription);
+            }
+            if (_cursor.isNull(_cursorIndexOfNewsContent)) {
+              _result.newsContent = null;
+            } else {
+              _result.newsContent = _cursor.getString(_cursorIndexOfNewsContent);
             }
             if (_cursor.isNull(_cursorIndexOfNewsDate)) {
               _result.newsDate = null;
