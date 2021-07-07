@@ -1,0 +1,42 @@
+com/example/data/mapper/NewsDtoMapper.java
+ com.example.data.mapper.NewsDtoMapper
+com/example/data/mapper/NewsEntityToArticle.java
+ com.example.data.mapper.NewsEntityToArticle
+com/example/data/repo/remote/HttpSuccessInterceptor.java
+ com.example.data.repo.remote.HttpSuccessInterceptor
+com/example/data/BuildConfig.java
+ com.example.data.BuildConfig
+com/example/data/repo/remote/NewsRepository.java
+ com.example.data.repo.remote.NewsRepository
+com/example/data/exceptions/ApiException.java
+ com.example.data.exceptions.ApiException
+com/example/data/model/NewsArticle.java
+ com.example.data.model.NewsArticle
+com/example/data/dtos/ArticleListDto.java
+ com.example.data.dtos.ArticleListDto
+com/example/data/mapper/NewsArticlesToEntity.java
+ com.example.data.mapper.NewsArticlesToEntity
+com/example/data/repo/remote/RemoteSource.java
+ com.example.data.repo.remote.RemoteSource
+com/example/data/repo/local/NewsEntity.java
+ com.example.data.repo.local.NewsEntity
+com/example/data/exceptions/ConnectivityException.java
+ com.example.data.exceptions.ConnectivityException
+com/example/data/repo/local/NewsDatabase.java
+ com.example.data.repo.local.NewsDatabase
+com/example/data/repo/local/NewsLocalDataStore.java
+ com.example.data.repo.local.NewsLocalDataStore
+com/example/data/dtos/SourceDto.java
+ com.example.data.dtos.SourceDto
+com/example/data/repo/remote/NewsAPI.java
+ com.example.data.repo.remote.NewsAPI
+com/example/data/repo/local/NewsDao.java
+ com.example.data.repo.local.NewsDao
+com/example/data/dtos/ArticleDto.java
+ com.example.data.dtos.ArticleDto
+com/example/data/repo/remote/HttpClientFactory.java
+ com.example.data.repo.remote.HttpClientFactory
+com/example/data/di/RepoModule.java
+ com.example.data.di.RepoModule
+com/example/data/repo/NewsRepositoryImpl.java
+ com.example.data.repo.NewsRepositoryImpl
